@@ -27,7 +27,7 @@ jobs:
         with:
           repository: GloriousEggroll/proton-ge-custom 
           latest: true
-          tarBall: true
+          fileName: 'GE-Proton*.tar.gz'
 
       - name: compress
         run: |
