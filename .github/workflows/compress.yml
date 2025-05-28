@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  compress:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -28,5 +28,11 @@ jobs:
           repository: GloriousEggroll/proton-ge-custom 
           latest: true
           tarBall: true
+          extract: true
 
       - name: compress
+        run: |
+          find . -maxdepth 1 -type d -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton
+          7z a -t7z -mx=9 -m0=LZMA2 -mf=BCJ2 -md=32m -ms -mqs proton.7z proton/
+
+          
