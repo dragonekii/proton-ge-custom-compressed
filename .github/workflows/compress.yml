@@ -31,7 +31,7 @@ jobs:
 
       - name: compress
         run: |
-          find . -maxdepth 1 -type f -name "proton-ge-custom-GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
+          find . -maxdepth 1 -type f -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
           mkdir proton
           tar -xvzf proton.tar.gz -C proton
           7z a -t7z -mx=9 -m0=LZMA2 -mf=BCJ2 -md=32m -ms -mqs proton.7z proton/
