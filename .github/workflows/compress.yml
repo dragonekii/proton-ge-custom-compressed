@@ -35,4 +35,7 @@ jobs:
           find . -maxdepth 1 -type d -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton
           7z a -t7z -mx=9 -m0=LZMA2 -mf=BCJ2 -md=32m -ms -mqs proton.7z proton/
 
-          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: proton.7z
+          path: ${{ github.workspace }}/proton.7z
