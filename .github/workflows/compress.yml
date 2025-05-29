@@ -37,18 +37,18 @@ jobs:
 
       - name: compress
         run: |
-          xz -9e -T0 -v proton.tar
-
+          # xz -9e -T0 -v proton.tar
+          touch proton.tar.xz
+          mv proton.tar.xz {VER}.tar.xz
+          
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.VER }}.tar.xz
-          path: ${{ github.workspace }}/proton.tar.xz
+          path: ${{ github.workspace }}/{VER}.tar.xz
 
       - name: release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ github.workspace }}/proton.tar.xz
+          files: ${{ github.workspace }}/{VER}.tar.xz
           name:  ${{ env.VER }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
