@@ -36,7 +36,6 @@ jobs:
 
       - name: preparation
         run: |
-          grep "GE-Proton.*\.tar\.gz$" SHA256SUMS | sha256sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
@@ -47,6 +46,7 @@ jobs:
           # xz -9e -T0 -v proton.tar
           touch proton.tar.xz
           mv proton.tar.xz "${VER}.tar.xz"
+          sha256sum "${VER}.tar.xz" >> SHA256SUMS
           
       - uses: actions/upload-artifact@v4
         with:
@@ -57,4 +57,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ github.workspace }}/${{ env.VER }}.tar.xz
+          files: |
+            ${{ github.workspace }}/${{ env.VER }}.tar.xz
+            ${{ github.workspace }}/SHA256SUMS
