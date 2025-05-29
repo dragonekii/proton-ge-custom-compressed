@@ -38,7 +38,7 @@ jobs:
 
       - name: compress
         run: |
-          xz -9 -e --lzma2=dict=1536MiB,lc=4,lp=0,pb=0,mode=normal,nice=273,mf=bt4,depth=512 -T0 proton.tar
+          xz -5 -T0 -v proton.tar
 
       - uses: actions/upload-artifact@v4
         with:
