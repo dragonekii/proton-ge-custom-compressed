@@ -39,7 +39,7 @@ jobs:
           grep "GE-Proton.*\.tar\.gz$" SHA256SUMS | sha256sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
-          find . -maxdepth 1 -type f -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
+          mv GE-Proton*.tar.gz proton.tar.gz
           gzip -d proton.tar.gz
 
       - name: compress
