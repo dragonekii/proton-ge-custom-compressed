@@ -29,13 +29,27 @@ jobs:
           latest: true
           fileName: 'GE-Proton*.tar.gz'
 
-      - name: compress
+      - name: preparation
         run: |
+          VER = $(basename GE-Proton*.tar.gz .tar.gz)
+          echo "VER=${VER}" >> "$GITHUB_ENV"
           find . -maxdepth 1 -type f -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
           gzip -d proton.tar.gz
+
+      - name: compress
+        run: |
           xz -9 -e --lzma2=dict=1536MiB,lc=4,lp=0,pb=0,mode=normal,nice=273,mf=bt4,depth=512 -T0 proton.tar
 
       - uses: actions/upload-artifact@v4
         with:
-          name: proton.tar.xz
-          path: ${{ github.workspace }}/proton.7z
+          name: ${{ env.VER }}.tar.xz
+          path: ${{ github.workspace }}/proton.tar.xz
+
+      - name: release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ env.VER }}.tar.xz
+          name:  ${{ env.VER }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
