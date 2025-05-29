@@ -3,7 +3,7 @@ name: compress
 on:
   push:
     tags:
-      - '*' # triggers the workflow for any tag pushed
+      - 'GE-Proton*' # triggers the workflow for any tag pushed
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
