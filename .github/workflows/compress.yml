@@ -21,15 +21,22 @@ jobs:
 
     
     steps:
-      - name: Download latest GE-Proton release
+      - name: Download proton-ge-custom latest release
         uses: robinraju/release-downloader@v1
         with:
           repository: GloriousEggroll/proton-ge-custom
           latest: true
           fileName: 'GE-Proton*.tar.gz'
+          
+      - uses: robinraju/release-downloader@v1
+        with:
+          repository: GloriousEggroll/proton-ge-custom
+          latest: true
+          fileName: SHA256SUMS
 
       - name: preparation
         run: |
+          grep "GE-Proton.*\.tar\.gz$" SHA256SUMS | sha256sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           find . -maxdepth 1 -type f -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
