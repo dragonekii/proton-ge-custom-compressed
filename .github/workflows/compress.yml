@@ -39,12 +39,12 @@ jobs:
         run: |
           # xz -9e -T0 -v proton.tar
           touch proton.tar.xz
-          mv proton.tar.xz {VER}.tar.xz
+          mv proton.tar.xz "${VER}.tar.xz"
           
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.VER }}.tar.xz
-          path: ${{ github.workspace }}/{VER}.tar.xz
+          path: ${{ github.workspace }}/${{ env.VER }}.tar.xz
 
       - name: release
         uses: softprops/action-gh-release@v2
