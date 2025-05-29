@@ -1,9 +1,7 @@
 name: compress
 
 on:
-  # Triggers the workflow on push events but only for the "main" branch
   push:
-    branches: [ "main" ]
     tags:
       - '*' # triggers the workflow for any tag pushed
 
@@ -36,7 +34,7 @@ jobs:
 
       - name: preparation
         run: |
-          grep "GE-Proton*" SHA256SUMS | sha256sum -c
+          grep "GE-Proton.*\.tar\.gz$" SHA256SUMS | sha256sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
@@ -44,8 +42,7 @@ jobs:
 
       - name: compress
         run: |
-          # xz -9e -T0 -v proton.tar
-          touch proton.tar.xz
+          xz -9e -T0 -v proton.tar
           mv proton.tar.xz "${VER}.tar.xz"
           sha256sum "${VER}.tar.xz" >> SHA256SUMS
           
