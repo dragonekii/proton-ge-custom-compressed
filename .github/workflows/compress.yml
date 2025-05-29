@@ -31,7 +31,7 @@ jobs:
 
       - name: preparation
         run: |
-          VER = $(basename GE-Proton*.tar.gz .tar.gz)
+          VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           find . -maxdepth 1 -type f -name "GE-Proton*" -print0 | xargs -0 -I {} mv {} proton.tar.gz
           gzip -d proton.tar.gz
