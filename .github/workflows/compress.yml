@@ -58,3 +58,4 @@ jobs:
           files: |
             ${{ github.workspace }}/${{ env.VER }}.tar.xz
             ${{ github.workspace }}/SHA256SUMS
+          generate_release_notes: false
