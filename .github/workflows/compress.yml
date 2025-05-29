@@ -10,6 +10,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
 
   compress:
@@ -45,7 +48,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ env.VER }}.tar.xz
+          files: ${{ github.workspace }}/proton.tar.xz
           name:  ${{ env.VER }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
