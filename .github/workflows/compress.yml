@@ -38,14 +38,14 @@ jobs:
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
-          mv *.sha512sum SHA256SUMS
+          mv *.sha512sum SHA512SUMS
           gzip -d proton.tar.gz
 
       - name: compress
         run: |
           xz -9e -T0 -v proton.tar
           mv proton.tar.xz "${VER}.tar.xz"
-          sha256sum "${VER}.tar.xz" >> SHA256SUMS
+          sha512sum "${VER}.tar.xz" >> SHA256SUMS
           
       - uses: actions/upload-artifact@v4
         with:
