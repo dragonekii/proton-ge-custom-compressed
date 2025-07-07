@@ -30,7 +30,7 @@ jobs:
         with:
           repository: GloriousEggroll/proton-ge-custom
           latest: true
-          fileName: SHA256SUMS
+          fileName: '*.sha512sum'
 
       - name: preparation
         run: |
@@ -38,6 +38,7 @@ jobs:
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
+          mv *.sha512sum SHA256SUMS
           gzip -d proton.tar.gz
 
       - name: compress
