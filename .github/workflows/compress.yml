@@ -34,11 +34,11 @@ jobs:
 
       - name: preparation
         run: |
+          mv GE-Proton*.sha512sum SHA512SUMS
           grep "GE-Proton.*\.tar\.gz$" SHA512SUMS | sha512sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
-          mv GE-Proton*.sha512sum SHA512SUMS
           gzip -d proton.tar.gz
 
       - name: compress
