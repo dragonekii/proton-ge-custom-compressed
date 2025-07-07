@@ -34,7 +34,7 @@ jobs:
 
       - name: preparation
         run: |
-          grep "GE-Proton.*\.tar\.gz$" SHA256SUMS | sha256sum -c
+          grep "GE-Proton.*\.tar\.gz$" SHA512SUMS | sha512sum -c
           VER=$(basename GE-Proton*.tar.gz .tar.gz)
           echo "VER=${VER}" >> "$GITHUB_ENV"
           mv GE-Proton*.tar.gz proton.tar.gz
@@ -58,5 +58,5 @@ jobs:
         with:
           files: |
             ${{ github.workspace }}/${{ env.VER }}.tar.xz
-            ${{ github.workspace }}/SHA256SUMS
+            ${{ github.workspace }}/SHA512SUMS
           generate_release_notes: false
