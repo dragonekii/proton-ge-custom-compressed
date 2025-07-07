@@ -45,7 +45,7 @@ jobs:
         run: |
           xz -9e -T0 -v proton.tar
           mv proton.tar.xz "${VER}.tar.xz"
-          sha512sum "${VER}.tar.xz" >> SHA256SUMS
+          sha512sum "${VER}.tar.xz" >> SHA512SUMS
           
       - uses: actions/upload-artifact@v4
         with:
