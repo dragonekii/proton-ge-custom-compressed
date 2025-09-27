@@ -47,26 +47,26 @@ jobs:
 
       - name: zsync
         run: |
-          RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/${{ env.VER }}.tar.gz"
-          zsyncmake -z -u "${RELEASE_URL}" proton.tar
+          UPSTREAM_URL="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${{ env.VER }}/${{ env.VER }}.tar.gz"
+          
+          zsyncmake -z -u "${UPSTREAM_URL}" proton.tar
           
           mv proton.tar.gz "${{ env.VER }}.tar.gz"
           mv proton.tar.zsync "${{ env.VER }}.tar.gz.zsync"
           
           rm -f SHA512SUMS
-          sha512sum "${{ env.VER }}.tar.gz" "${{ env.VER }}.tar.gz.zsync" > SHA512SUMS
-          
+          sha512sum "${{ env.VER }}.tar.gz.zsync" > SHA512SUMS
+
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.VER }}.tar.gz
-          path: ${{ github.workspace }}/${{ env.VER }}.tar.gz
+          name: ${{ env.VER }}.zsync
+          path: ${{ github.workspace }}/${{ env.VER }}.tar.gz.zsync
 
       - name: release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            ${{ github.workspace }}/${{ env.VER }}.tar.gz
             ${{ github.workspace }}/${{ env.VER }}.tar.gz.zsync
             ${{ github.workspace }}/SHA512SUMS
           generate_release_notes: false
