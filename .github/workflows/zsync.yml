@@ -1,4 +1,4 @@
-name: compress
+name: zsync
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
 
-  compress:
+  zsync:
 
     runs-on: ubuntu-latest
 
@@ -41,9 +41,10 @@ jobs:
           mv GE-Proton*.tar.gz proton.tar.gz
           gzip -d proton.tar.gz
 
-      - name: compress
+      - name: zsync
         run: |
-          xz -9e -T0 -v proton.tar
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/${RELEASE_ARCHIVE}"
+          zsyncmake -z -u ${RELEASE_URL} proton.tar
           mv proton.tar.xz "${VER}.tar.xz"
           sha512sum "${VER}.tar.xz" >> SHA512SUMS
           
