@@ -1,4 +1,4 @@
-name: compress
+name: compress-xz
 
 on:
   push:
